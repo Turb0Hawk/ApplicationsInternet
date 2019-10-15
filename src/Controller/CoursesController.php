@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\Customer;
 
 /**
  * Courses Controller
@@ -53,12 +54,17 @@ class CoursesController extends AppController
         $course = $this->Courses->newEntity();
         if ($this->request->is('post')) {
             $course = $this->Courses->patchEntity($course, $this->request->getData());
+            if($this->Auth->user('customer_id') === null){
+                $this->Flash->error(__('You must create a customer profile to subscribe to a course'));
+                return $this->redirect(['controller' => 'user', 'action' => 'add']);
+            }else{
+            $course->customer_id = $this->Auth->user('customer_id');
             if ($this->Courses->save($course)) {
                 $this->Flash->success(__('The course has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The course could not be saved. Please, try again.'));
+            }
         }
         $customers = $this->Courses->Customers->find('list', ['limit' => 200]);
         $instructors = $this->Courses->Instructors->find('list', ['limit' => 200]);
@@ -80,7 +86,9 @@ class CoursesController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $course = $this->Courses->patchEntity($course, $this->request->getData());
+            $course = $this->Courses->patchEntity($course, $this->request->getData(), [
+                'accessibleFields' => ['customer_id' => false]
+            ]);
             if ($this->Courses->save($course)) {
                 $this->Flash->success(__('The course has been saved.'));
 
@@ -113,5 +121,26 @@ class CoursesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function isAuthorized($user)
+    {
+        $action = $this->request->getParam('action');
+        // The add and tags actions are always allowed to logged in users.
+        if (in_array($action, ['add'])) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow(['logout', 'view']);
+    }
+
+    protected function getCustomerIdByUserId($userId){
+//        Customer::
     }
 }

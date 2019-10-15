@@ -42,4 +42,8 @@ class Car extends Entity
         'customer' => true,
         'courses' => true
     ];
+
+    protected function _getFullName(){
+        return $this->_properties['make'] . " " . $this->_properties['model'] . " " . $this->_properties['trim'];
+    }
 }

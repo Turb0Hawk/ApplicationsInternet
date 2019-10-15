@@ -49,15 +49,21 @@ class CustomersController extends AppController
     {
         $customer = $this->Customers->newEntity();
         if ($this->request->is('post')) {
-            $customer = $this->Customers->patchEntity($customer, $this->request->getData());
-            if ($this->Customers->save($customer)) {
-                $this->Flash->success(__('The customer has been saved.'));
+            if($this->Auth->user('customer_id') === null){
+                $this->Flash->error(__('You must create a customer profile to subscribe to a course'));
+                return $this->redirect(['controller' => 'user', 'action' => 'add']);
+            }else {
+                $customer = $this->Customers->patchEntity($customer, $this->request->getData());
+                if ($this->Customers->save($customer)) {
+                    $this->Flash->success(__('The customer has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('The customer could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The customer could not be saved. Please, try again.'));
         }
-        $this->set(compact('customer'));
+        $users = $this->Customers->Users->find('list', ['limit' => 200]);
+        $this->set(compact('customer', 'users'));
     }
 
     /**
@@ -73,7 +79,10 @@ class CustomersController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $customer = $this->Customers->patchEntity($customer, $this->request->getData());
+            $customer = $this->Customers->patchEntity($customer, $this->request->getData(),[
+                'accessibleFields' => ['user_id' => false]
+            ]);
+            $customer->user_id = $this->Auth->user('id');
             if ($this->Customers->save($customer)) {
                 $this->Flash->success(__('The customer has been saved.'));
 
@@ -81,7 +90,8 @@ class CustomersController extends AppController
             }
             $this->Flash->error(__('The customer could not be saved. Please, try again.'));
         }
-        $this->set(compact('customer'));
+        $users = $this->Customers->Users->find('list', ['limit' => 200]);
+        $this->set(compact('customer', 'users'));
     }
 
     /**
@@ -102,5 +112,16 @@ class CustomersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function isAuthorized($user)
+    {
+        $action = $this->request->getParam('action');
+        // The add and tags actions are always allowed to logged in users.
+        if (in_array($action, ['add', 'edit'])) {
+            return true;
+        }else{
+            return false;
+        }
     }
 }

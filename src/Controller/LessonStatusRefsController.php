@@ -73,7 +73,9 @@ class LessonStatusRefsController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $lessonStatusRef = $this->LessonStatusRefs->patchEntity($lessonStatusRef, $this->request->getData());
+            $lessonStatusRef = $this->LessonStatusRefs->patchEntity($lessonStatusRef, $this->request->getData(),[
+                'accessibleFields' => ['user_id' => false]
+            ]);
             if ($this->LessonStatusRefs->save($lessonStatusRef)) {
                 $this->Flash->success(__('The lesson status ref has been saved.'));
 
@@ -102,5 +104,16 @@ class LessonStatusRefsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function isAuthorized($user)
+    {
+        $action = $this->request->getParam('action');
+        // The add and tags actions are always allowed to logged in users.
+        if (in_array($action, ['add', 'edit'])) {
+            return true;
+        }else{
+            return false;
+        }
     }
 }

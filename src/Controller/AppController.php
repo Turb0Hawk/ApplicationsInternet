@@ -75,6 +75,6 @@ class AppController extends Controller
     public function isAuthorized($user)
     {
         // Par défaut, on refuse l'accès.
-        return true;
+        return false;
     }
 }

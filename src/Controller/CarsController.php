@@ -53,6 +53,7 @@ class CarsController extends AppController
         $car = $this->Cars->newEntity();
         if ($this->request->is('post')) {
             $car = $this->Cars->patchEntity($car, $this->request->getData());
+            $car->customer_id = $this->Auth->user('customer_id');
             if ($this->Cars->save($car)) {
                 $this->Flash->success(__('The car has been saved.'));
 
@@ -77,7 +78,9 @@ class CarsController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $car = $this->Cars->patchEntity($car, $this->request->getData());
+            $car = $this->Cars->patchEntity($car, $this->request->getData(),[
+                'accessibleFields' => ['user_id' => false]
+            ]);
             if ($this->Cars->save($car)) {
                 $this->Flash->success(__('The car has been saved.'));
 
@@ -110,6 +113,17 @@ class CarsController extends AppController
     }
 
     public function  showFullName($id){
-        return $this->Cars->get($id, ['Make', 'Mofel']);
+        return $this->Cars->get($id, ['Make', 'Model']);
+    }
+
+    public function isAuthorized($user)
+    {
+        $action = $this->request->getParam('action');
+        // The add and tags actions are always allowed to logged in users.
+        if (in_array($action, ['add', 'edit'])) {
+            return true;
+        }else{
+            return false;
+        }
     }
 }

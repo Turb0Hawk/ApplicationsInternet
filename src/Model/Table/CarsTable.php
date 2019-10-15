@@ -36,7 +36,7 @@ class CarsTable extends Table
         parent::initialize($config);
 
         $this->setTable('cars');
-        $this->setDisplayField('model');
+        $this->setDisplayField('FullName');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

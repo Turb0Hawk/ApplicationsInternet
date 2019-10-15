@@ -22,7 +22,7 @@
             echo $this->Form->control('name');
             echo $this->Form->control('lastName');
             echo $this->Form->control('phone');
-            echo $this->Form->control('user_id', ['options' => $users, 'empty' => true]);
+            echo $this->Form->control('user_id', ['options' => $users]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

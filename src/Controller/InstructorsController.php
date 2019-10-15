@@ -77,7 +77,9 @@ class InstructorsController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $instructor = $this->Instructors->patchEntity($instructor, $this->request->getData());
+            $instructor = $this->Instructors->patchEntity($instructor, $this->request->getData(),[
+                'accessibleFields' => ['user_id' => false]
+            ]);
             if ($this->Instructors->save($instructor)) {
                 $this->Flash->success(__('The instructor has been saved.'));
 
@@ -107,5 +109,16 @@ class InstructorsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function isAuthorized($user)
+    {
+        $action = $this->request->getParam('action');
+        // The add and tags actions are always allowed to logged in users.
+        if (in_array($action, ['add', 'edit'])) {
+            return true;
+        }else{
+            return false;
+        }
     }
 }

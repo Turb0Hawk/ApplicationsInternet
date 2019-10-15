@@ -31,7 +31,7 @@
             echo $this->Form->control('last_name');
             echo $this->Form->control('civil_number');
             echo $this->Form->control('street_name');
-            echo $this->Form->control('user_id');
+            echo $this->Form->control('user_id', ['options' => $users]);
             echo $this->Form->control('phone_number');
         ?>
     </fieldset>
