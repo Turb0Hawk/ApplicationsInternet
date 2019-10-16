@@ -1,4 +1,4 @@
-<?php
+q<?php
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Course $course

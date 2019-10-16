@@ -29,4 +29,12 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
+
+    <?= $this->Flash->render() ?>
+    <div class="upload-frm">
+        <?php echo $this->Form->create($uploadData, ['type' => 'file']); ?>
+        <?php echo $this->Form->control('file', ['type' => 'file', 'class' => 'form-control']); ?>
+        <?php echo $this->Form->button(__('Upload File'), ['type'=>'submit', 'class' => 'form-controlbtn btn-default']); ?>
+        <?php echo $this->Form->end(); ?>
+    </div>
 </div>

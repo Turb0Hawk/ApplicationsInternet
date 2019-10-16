@@ -43,7 +43,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <div class="top-bar-section">
             <ul class="right">
                 <li><?php
-                    $loguser = $this->request->session()->read('Auth.User');
+                    $loguser = $this->request->getSession()->read('Auth.User');
                     if ($loguser) {
                         $user = $loguser['email'];
                         echo $this->Html->link($user . ' logout', ['controller' => 'Users', 'action' => 'logout']);

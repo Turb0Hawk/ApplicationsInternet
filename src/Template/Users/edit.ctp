@@ -25,6 +25,10 @@
         <?php
             echo $this->Form->control('email');
             echo $this->Form->control('password');
+            if($role == 'admin'){
+                echo $this->Form->select('Role', ['Admin'=>'admin',
+                    'Confirmed user'=>'confirmed', 'user'=>'user']);
+            }
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

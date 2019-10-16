@@ -57,11 +57,11 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
                     return $this->redirect(['action' => 'index']);
-
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $this->set(compact('user'));
+
+        $this->set(compact('user' ));
     }
 
     /**
@@ -84,8 +84,9 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
+        $role = $this->Auth->user('role');
         $customers = $this->Users->Customers->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'customers'));
+        $this->set(compact('user', 'customers', 'role'));
     }
 
     /**
@@ -116,7 +117,7 @@ class UsersController extends AppController
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            $this->Flash->error('Votre identifiant ou votre mot de passe est incorrect.');
+            $this->Flash->error(__('Your username or password are incorrect.'));
         }
     }
 
@@ -128,7 +129,7 @@ class UsersController extends AppController
 
     public function logout()
     {
-        $this->Flash->success('Vous avez été déconnecté.');
+        $this->Flash->success(__('You have been disconnected.'));
         return $this->redirect($this->Auth->logout());
     }
 
@@ -167,7 +168,9 @@ class UsersController extends AppController
 
     public function email($user){
         $email = new Email('default');
-        $email->to($user->email)->subject('Confirmation du email')->send( "http://" . $_SERVER['HTTP_HOST'] . $this->request->webroot . "users/confirm/" . $user->uuid);
+        $email->to($user->email)->setSubject(__('Email Confirmation'))->send(
+            __("Please Follow this link to complete registration of your account") .
+            "\n\nhttp://" . $_SERVER['HTTP_HOST'] . $this->request->webroot . "users/confirm/" . $user->uuid);
     }
 
     public function confirm($uuid){

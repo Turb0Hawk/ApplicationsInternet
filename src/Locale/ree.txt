@@ -1,0 +1,125 @@
+The car has been saved.
+The car could not be saved. Please, try again.
+The car has been deleted.
+The car could not be deleted. Please, try again.
+File has been uploaded and inserted successfully.
+Unable to upload file, please try again.
+Please choose a file to upload.
+The course has been saved.
+The course could not be saved. Please, try again.
+The course has been deleted.
+The course could not be deleted. Please, try again.
+The customer has been saved.
+The customer could not be saved. Please, try again.
+The customer has been deleted.
+The customer could not be deleted. Please, try again.
+The instructor has been saved.
+The instructor could not be saved. Please, try again.
+The instructor has been deleted.
+The instructor could not be deleted. Please, try again.
+The lesson status ref has been saved.
+The lesson status ref could not be saved. Please, try again.
+The lesson status ref has been deleted.
+The lesson status ref could not be deleted. Please, try again.
+The user has been saved.
+The user could not be saved. Please, try again.
+The user has been deleted.
+The user could not be deleted. Please, try again.
+Your username or password are incorrect.
+You have been disconnected.
+Email Confirmation
+Please Follow this link to complete registration of your account
+The registration is almost complete! look into your email to complete the process.
+The user could not be registered. Please, try again.
+Actions
+List Courses
+Cours
+Session
+Diagrame de la base de donnée en utilisation
+List Cars
+List Customers
+New Customer
+New Course
+Add Car
+Submit
+Upload File
+Delete
+Are you sure you want to delete # {0}?
+Edit Car
+New Car
+Cars
+View
+Edit
+first
+previous
+next
+last
+Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total
+Delete Car
+Make
+Model
+Trim
+Transmission
+Drivetrain
+Customer
+Id
+Created
+Modified
+Related Courses
+Name
+Length
+Customer Id
+Lesson Date
+Instructor Id
+Car Id
+Lesson Status Ref Id
+List Instructors
+New Instructor
+List Lesson Status Refs
+New Lesson Status Ref
+Add Course
+Edit Course
+Courses
+Delete Course
+Instructor
+Car
+Lesson Status Ref
+List Users
+New User
+Add Customer
+Edit Customer
+Customers
+Delete Customer
+Last Name
+Civil Number
+Street Name
+Phone Number
+User Id
+Related Users
+Email
+Password
+Role
+Related Cars
+sent
+Add Instructor
+Edit Instructor
+Instructors
+Delete Instructor
+LastName
+Phone
+User
+Error
+Back
+Add Lesson Status Ref
+Edit Lesson Status Ref
+Lesson Status Refs
+Delete Lesson Status Ref
+Add User
+Edit User
+Users
+Register
+Enter your informations to complete the registration process
+Delete User
+Related Instructors
+The requested address {0} was not found on this server.
+An Internal Error Has Occurred
