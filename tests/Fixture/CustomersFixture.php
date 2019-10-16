@@ -53,8 +53,8 @@ class CustomersFixture extends TestFixture
                 'street_name' => 'Lorem ipsum dolor sit amet',
                 'user_id' => 1,
                 'phone_number' => 'Lorem ip',
-                'created' => '2019-10-15 01:19:07',
-                'modified' => '2019-10-15 01:19:07'
+                'created' => '2019-10-15 17:44:28',
+                'modified' => '2019-10-15 17:44:28'
             ],
         ];
         parent::init();

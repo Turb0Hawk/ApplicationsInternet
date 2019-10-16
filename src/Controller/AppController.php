@@ -69,7 +69,7 @@ class AppController extends Controller
             'unauthorizedRedirect' => $this->referer()
         ]);
 
-        $this->Auth->allow(['display', 'view', 'index']);
+        $this->Auth->allow(['display', 'view', 'index', 'register', 'email']);
     }
 
     public function isAuthorized($user)

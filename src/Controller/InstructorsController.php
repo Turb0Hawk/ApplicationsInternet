@@ -113,12 +113,21 @@ class InstructorsController extends AppController
 
     public function isAuthorized($user)
     {
+        $authorisation = false;
         $action = $this->request->getParam('action');
-        // The add and tags actions are always allowed to logged in users.
-        if (in_array($action, ['add', 'edit'])) {
-            return true;
-        }else{
-            return false;
+
+        switch ($this->Auth->user('role')){
+            case 'admin':
+                $authorisation = true;
+                break;
+            default:
+                if (in_array($action, ['view'])) {
+                    $authorisation = true;
+                } else{
+                    $authorisation = false;
+                }
+                break;
         }
+        return $authorisation;
     }
 }

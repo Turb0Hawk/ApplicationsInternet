@@ -42,7 +42,8 @@ class InstructorsTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Users', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER'
         ]);
         $this->hasMany('Courses', [
             'foreignKey' => 'instructor_id'

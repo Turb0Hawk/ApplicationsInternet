@@ -10,7 +10,7 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string|null $lastName
  * @property string $phone
- * @property int|null $user_id
+ * @property int $user_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *

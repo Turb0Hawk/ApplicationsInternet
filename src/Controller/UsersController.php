@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Mailer\Email;
 
 /**
  * Users Controller
@@ -50,6 +51,8 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
+            $user->role = 'confirmed';
+            $user->uuid = Text::uuid();
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
                     return $this->redirect(['action' => 'index']);
@@ -57,8 +60,7 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $customers = $this->Users->Customers->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'customers'));
+        $this->set(compact('user'));
     }
 
     /**
@@ -131,12 +133,64 @@ class UsersController extends AppController
 
     public function isAuthorized($user)
     {
+        $authorisation = false;
         $action = $this->request->getParam('action');
-        // The add and tags actions are always allowed to logged in users.
-        if (in_array($action, ['add', 'edit'])) {
-            return true;
-        }else{
-            return false;
+
+        switch ($this->Auth->user('role')){
+            case 'admin':
+                    $authorisation = true;
+                break;
+            case 'confirmed':
+                if(in_array($action, ['add', 'view', 'email'])){
+                    $authorisation = true;
+                } elseif ($this->request->getParam('pass.0') == $this->Auth->user('id') &&
+                    in_array($action, ['delete', 'edit'])){
+                    $authorisation = true;
+                }
+                break;
+            case 'user':
+                if(in_array($action, ['add', 'view', 'email'])){
+                    $authorisation = true;
+                }
+                break;
+            default:
+                if (in_array($action, ['add', 'email', 'register'])) {
+                    $authorisation = true;
+                } else{
+                    $authorisation = false;
+                }
+                break;
         }
+        return $authorisation;
+    }
+
+    public function email($user, $uuid){
+        $email = new Email('default');
+        $email->to($user->email)->subject('Confirmation du email')->send( "http://" . $_SERVER['HTTP_HOST'] . $this->request->webroot . "users/confirm/" . $uuid);
+    }
+
+    public function confirm($uuid){
+        $user = $this->Users->findByUuid($uuid)->first();
+        if ($user){
+            if($user->get('role') == 'user'){
+                $user->set('role','confirmed');
+            }
+        }
+        $this->redirect(['controller' => 'customer', 'action' => 'index']);
+    }
+
+    public function register(){
+        $user = $this->Users->newEntity();
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $user->role = 'user';
+            $user->uuid = $uuid = Text::uuid();
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('The registration is almost complete! look into your email to complete the process.'));
+                return $this->redirect(['action' => 'email']);
+            }
+            $this->Flash->error(__('The user could not be registered. Please, try again.'));
+        }
+        $this->set(compact('user'));
     }
 }

@@ -45,7 +45,7 @@
                 <td><?= $course->has('customer') ? $this->Html->link($course->customer->name, ['controller' => 'Customers', 'action' => 'view', $course->customer->id]) : '' ?></td>
                 <td><?= h($course->lesson_date) ?></td>
                 <td><?= $course->has('instructor') ? $this->Html->link($course->instructor->name, ['controller' => 'Instructors', 'action' => 'view', $course->instructor->id]) : '' ?></td>
-                <td><?= $course->has('car') ? $this->Html->link($course->car->FullName, ['controller' => 'Cars', 'action' => 'view', $course->car_id]) : '' ?></td>
+                <td><?= $course->has('car') ? $this->Html->link($course->car->FullName, ['controller' => 'Cars', 'action' => 'view', $course->car->id]) : '' ?></td>
                 <td><?= $course->has('lesson_status_ref') ? $this->Html->link($course->lesson_status_ref->name, ['controller' => 'LessonStatusRefs', 'action' => 'view', $course->lesson_status_ref->id]) : '' ?></td>
                 <td><?= h($course->created) ?></td>
                 <td><?= h($course->modified) ?></td>

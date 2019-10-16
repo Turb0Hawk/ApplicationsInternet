@@ -42,7 +42,21 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         </ul>
         <div class="top-bar-section">
             <ul class="right">
-                <!--TODO add bouton login logout-->
+                <li><?php
+                    $loguser = $this->request->session()->read('Auth.User');
+                    if ($loguser) {
+                        $user = $loguser['email'];
+                        echo $this->Html->link($user . ' logout', ['controller' => 'Users', 'action' => 'logout']);
+                    } else {
+                        echo $this->Html->link('login', ['controller' => 'Users', 'action' => 'login']);
+                    }
+                    ?>
+                </li>
+                <li>
+                    <?php
+                        echo $this->Html->link('About', ['controller' => 'About', 'action' => 'index']);
+                     ?>
+                </li>
             </ul>
         </div>
     </nav>

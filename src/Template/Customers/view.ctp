@@ -67,7 +67,6 @@
                 <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('Email') ?></th>
                 <th scope="col"><?= __('Password') ?></th>
-                <th scope="col"><?= __('Customer Id') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col"><?= __('Role') ?></th>
@@ -78,7 +77,6 @@
                 <td><?= h($users->id) ?></td>
                 <td><?= h($users->email) ?></td>
                 <td><?= h($users->password) ?></td>
-                <td><?= h($users->customer_id) ?></td>
                 <td><?= h($users->created) ?></td>
                 <td><?= h($users->modified) ?></td>
                 <td><?= h($users->role) ?></td>

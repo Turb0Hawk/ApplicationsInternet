@@ -21,6 +21,7 @@ use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
+use Cake\Core\Plugin;
 
 /**
  * The default class to use for all routes
@@ -88,6 +89,9 @@ Router::scope('/', function (RouteBuilder $routes) {
      * You can remove these routes once you've connected the
      * routes you want in your application.
      */
+
+//    $routes->connect('/email',['controller'=>'Emails','action'=>'index']);
+
     $routes->fallbacks(DashedRoute::class);
 });
 

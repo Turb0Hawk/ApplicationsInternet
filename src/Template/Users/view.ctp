@@ -11,8 +11,6 @@
         <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Customers'), ['controller' => 'Customers', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Customer'), ['controller' => 'Customers', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Instructors'), ['controller' => 'Instructors', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Instructor'), ['controller' => 'Instructors', 'action' => 'add']) ?> </li>
     </ul>
@@ -45,43 +43,6 @@
             <td><?= h($user->modified) ?></td>
         </tr>
     </table>
-    <div class="related">
-        <h4><?= __('Related Customers') ?></h4>
-        <?php if (!empty($user->customers)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Name') ?></th>
-                <th scope="col"><?= __('Last Name') ?></th>
-                <th scope="col"><?= __('Civil Number') ?></th>
-                <th scope="col"><?= __('Street Name') ?></th>
-                <th scope="col"><?= __('User Id') ?></th>
-                <th scope="col"><?= __('Phone Number') ?></th>
-                <th scope="col"><?= __('Created') ?></th>
-                <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($user->customers as $customers): ?>
-            <tr>
-                <td><?= h($customers->id) ?></td>
-                <td><?= h($customers->name) ?></td>
-                <td><?= h($customers->last_name) ?></td>
-                <td><?= h($customers->civil_number) ?></td>
-                <td><?= h($customers->street_name) ?></td>
-                <td><?= h($customers->user_id) ?></td>
-                <td><?= h($customers->phone_number) ?></td>
-                <td><?= h($customers->created) ?></td>
-                <td><?= h($customers->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Customers', 'action' => 'view', $customers->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Customers', 'action' => 'edit', $customers->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Customers', 'action' => 'delete', $customers->id], ['confirm' => __('Are you sure you want to delete # {0}?', $customers->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
-    </div>
     <div class="related">
         <h4><?= __('Related Instructors') ?></h4>
         <?php if (!empty($user->instructors)): ?>

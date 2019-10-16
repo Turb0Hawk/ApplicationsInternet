@@ -54,18 +54,14 @@ class CoursesController extends AppController
         $course = $this->Courses->newEntity();
         if ($this->request->is('post')) {
             $course = $this->Courses->patchEntity($course, $this->request->getData());
-            if($this->Auth->user('customer_id') === null){
-                $this->Flash->error(__('You must create a customer profile to subscribe to a course'));
-                return $this->redirect(['controller' => 'user', 'action' => 'add']);
-            }else{
-            $course->customer_id = $this->Auth->user('customer_id');
+//            $course->customer_id = $this->Auth->user('customer_id');
             if ($this->Courses->save($course)) {
                 $this->Flash->success(__('The course has been saved.'));
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The course could not be saved. Please, try again.'));
-            }
         }
+
         $customers = $this->Courses->Customers->find('list', ['limit' => 200]);
         $instructors = $this->Courses->Instructors->find('list', ['limit' => 200]);
         $cars = $this->Courses->Cars->find('list', ['limit' => 200]);
@@ -125,13 +121,35 @@ class CoursesController extends AppController
 
     public function isAuthorized($user)
     {
+        $authorisation = false;
         $action = $this->request->getParam('action');
-        // The add and tags actions are always allowed to logged in users.
-        if (in_array($action, ['add'])) {
-            return true;
-        }else{
-            return false;
+
+        switch ($this->Auth->user('role')){
+            case 'admin':
+                $authorisation = true;
+                break;
+            case 'confirmed':
+                if(in_array($action, ['add', 'view'])){
+                    $authorisation = true;
+                } elseif ($this->request->getParam('pass.0') == $this->Auth->user('id') &&
+                    in_array($action, ['delete', 'edit'])){
+                    $authorisation = true;
+                }
+                break;
+            case 'user':
+                if(in_array($action, ['add', 'view'])){
+                    $authorisation = true;
+                }
+                break;
+            default:
+                if (in_array($action, ['add', 'view'])) {
+                    $authorisation = true;
+                } else{
+                    $authorisation = false;
+                }
+                break;
         }
+        return $authorisation;
     }
 
     public function initialize()

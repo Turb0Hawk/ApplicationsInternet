@@ -31,6 +31,7 @@
         <?php
             echo $this->Form->control('name');
             echo $this->Form->control('length');
+            echo $this->Form->control('customer_id', ['options' => $customers]);
             echo $this->Form->control('lesson_date', ['empty' => true]);
             echo $this->Form->control('instructor_id', ['options' => $instructors]);
             echo $this->Form->control('car_id', ['options' => $cars]);

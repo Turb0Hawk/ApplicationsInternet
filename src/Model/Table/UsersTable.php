@@ -9,8 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \App\Model\Table\CustomersTable&\Cake\ORM\Association\BelongsTo $Customers
- * @property \App\Model\Table\CustomersTable&\Cake\ORM\Association\HasMany $Customers
+ * @property &\Cake\ORM\Association\HasMany $Customers
  * @property \App\Model\Table\InstructorsTable&\Cake\ORM\Association\HasMany $Instructors
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
@@ -42,9 +41,6 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Customers', [
-            'foreignKey' => 'customer_id'
-        ]);
         $this->hasMany('Customers', [
             'foreignKey' => 'user_id'
         ]);
@@ -95,7 +91,6 @@ class UsersTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['email']));
-        $rules->add($rules->existsIn(['customer_id'], 'Customers'));
 
         return $rules;
     }

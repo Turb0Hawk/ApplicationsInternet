@@ -57,12 +57,12 @@ class CoursesFixture extends TestFixture
                 'name' => 'Lorem ipsum dolor sit amet',
                 'length' => 1,
                 'customer_id' => 1,
-                'lesson_date' => '2019-10-15 01:19:07',
+                'lesson_date' => '2019-10-15 17:44:28',
                 'instructor_id' => 1,
                 'car_id' => 1,
                 'lesson_status_ref_id' => 1,
-                'created' => '2019-10-15 01:19:07',
-                'modified' => '2019-10-15 01:19:07'
+                'created' => '2019-10-15 17:44:28',
+                'modified' => '2019-10-15 17:44:28'
             ],
         ];
         parent::init();

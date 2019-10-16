@@ -18,7 +18,7 @@
     </ul>
 </nav>
 <div class="cars view large-9 medium-8 columns content">
-    <h3><?= h($car->id) ?></h3>
+    <h3><?= h($car->FullName) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Make') ?></th>

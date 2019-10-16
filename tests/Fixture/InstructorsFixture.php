@@ -19,7 +19,7 @@ class InstructorsFixture extends TestFixture
         'name' => ['type' => 'string', 'length' => 60, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'lastName' => ['type' => 'string', 'length' => 60, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'phone' => ['type' => 'string', 'length' => 11, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'user_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'user_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         '_indexes' => [
@@ -49,8 +49,8 @@ class InstructorsFixture extends TestFixture
                 'lastName' => 'Lorem ipsum dolor sit amet',
                 'phone' => 'Lorem ips',
                 'user_id' => 1,
-                'created' => '2019-10-15 01:19:07',
-                'modified' => '2019-10-15 01:19:07'
+                'created' => '2019-10-15 17:44:28',
+                'modified' => '2019-10-15 17:44:28'
             ],
         ];
         parent::init();

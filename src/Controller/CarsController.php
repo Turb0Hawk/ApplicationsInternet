@@ -53,7 +53,7 @@ class CarsController extends AppController
         $car = $this->Cars->newEntity();
         if ($this->request->is('post')) {
             $car = $this->Cars->patchEntity($car, $this->request->getData());
-            $car->customer_id = $this->Auth->user('customer_id');
+//            $car->customer_id = $this->Auth->user('customer_id');
             if ($this->Cars->save($car)) {
                 $this->Flash->success(__('The car has been saved.'));
 

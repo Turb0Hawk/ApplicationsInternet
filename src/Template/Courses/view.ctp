@@ -38,7 +38,7 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Car') ?></th>
-            <td><?= $course->has('car') ? $this->Html->link($course->car->id, ['controller' => 'Cars', 'action' => 'view', $course->car->id]) : '' ?></td>
+            <td><?= $course->has('car') ? $this->Html->link($course->car->FullName, ['controller' => 'Cars', 'action' => 'view', $course->car->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Lesson Status Ref') ?></th>
