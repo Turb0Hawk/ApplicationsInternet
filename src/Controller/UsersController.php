@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Mailer\Email;
+use Cake\Utility\Text;
 
 /**
  * Users Controller
@@ -164,19 +165,20 @@ class UsersController extends AppController
         return $authorisation;
     }
 
-    public function email($user, $uuid){
+    public function email($user){
         $email = new Email('default');
-        $email->to($user->email)->subject('Confirmation du email')->send( "http://" . $_SERVER['HTTP_HOST'] . $this->request->webroot . "users/confirm/" . $uuid);
+        $email->to($user->email)->subject('Confirmation du email')->send( "http://" . $_SERVER['HTTP_HOST'] . $this->request->webroot . "users/confirm/" . $user->uuid);
     }
 
     public function confirm($uuid){
         $user = $this->Users->findByUuid($uuid)->first();
         if ($user){
-            if($user->get('role') == 'user'){
-                $user->set('role','confirmed');
+            if($user->role == 'user'){
+                $user->role = 'confirmed';
+                $this->Users->save($user);
             }
         }
-        $this->redirect(['controller' => 'customer', 'action' => 'index']);
+        $this->redirect(['controller' => 'customers', 'action' => 'index']);
     }
 
     public function register(){
@@ -187,7 +189,8 @@ class UsersController extends AppController
             $user->uuid = $uuid = Text::uuid();
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The registration is almost complete! look into your email to complete the process.'));
-                return $this->redirect(['action' => 'email']);
+                $this->email($user);
+                return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The user could not be registered. Please, try again.'));
         }
