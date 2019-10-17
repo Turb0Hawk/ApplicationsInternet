@@ -40,7 +40,8 @@ class Car extends Entity
         'created' => true,
         'modified' => true,
         'customer' => true,
-        'courses' => true
+        'courses' => true,
+        'files' => true
     ];
 
     protected function _getFullName(){

@@ -48,6 +48,12 @@ class CarsTable extends Table
         $this->hasMany('Courses', [
             'foreignKey' => 'car_id'
         ]);
+
+        $this->belongsToMany('Cars', [
+            'foreignKey' => 'file_id',
+            'targetForeignKey' => 'car_id',
+            'joinTable' => 'cars_files'
+        ]);
     }
 
     /**

@@ -686,3 +686,6 @@ msgstr "The requested address {0} was not found on this server."
 #: Template/Error/error500.ctp:39
 msgid "An Internal Error Has Occurred"
 msgstr "An Internal Error Has Occurred"
+
+msgid "Language"
+msgstr ""

@@ -52,6 +52,33 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     }
                     ?>
                 </li>
+
+                <li >
+                        <!-- TODO fix this piece of shit -->
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <?php echo __('Language') ?>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="#">
+                                <?php
+                                echo $this->Html->link('English', ['action' => 'changeLang', 'en_US'], ['escape' => false])
+                                ?>>
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <?php
+                                echo $this->Html->link('Français', ['action' => 'changeLang', 'fr_FR'], ['escape' => false])
+                                ?>>
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <?php
+                                    echo $this->Html->link('Deutsche', ['action' => 'changeLang', 'de'], ['escape' => false])
+                                ?>>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
                 <li>
                     <?php
                         echo $this->Html->link('About', ['controller' => 'About', 'action' => 'index']);
