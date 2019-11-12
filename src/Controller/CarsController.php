@@ -51,11 +51,10 @@ class CarsController extends AppController
     public function view($id = null)
     {
         $car = $this->Cars->get($id, [
-            'contain' => ['Customers', 'Courses']
+            'contain' => ['Customers', 'Courses', 'Files']
         ]);
-        $file = $this->Files->get($id);
 
-        $this->set(compact('car','file'));
+        $this->set(compact('car'));
 //        $this->set('car', $car );
     }
 
@@ -77,9 +76,9 @@ class CarsController extends AppController
             }
             $this->Flash->error(__('The car could not be saved. Please, try again.'));
         }
-        $uploadData = '';
+        /*$uploadData = '';*/
         $customers = $this->Cars->Customers->find('list', ['limit' => 200]);
-        $this->set(compact('car', 'customers', 'uploadData'));
+        $this->set(compact('car', 'customers'/*, 'uploadData'*/));
     }
 
     /**

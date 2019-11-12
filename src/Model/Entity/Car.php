@@ -39,7 +39,7 @@ class Car extends Entity
         'customer_id' => true,
         'created' => true,
         'modified' => true,
-        'customer' => true,
+        'customers' => true,
         'courses' => true,
         'files' => true
     ];

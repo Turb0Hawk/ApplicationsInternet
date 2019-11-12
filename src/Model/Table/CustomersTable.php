@@ -52,6 +52,12 @@ class CustomersTable extends Table
         $this->hasMany('Courses', [
             'foreignKey' => 'customer_id'
         ]);
+
+        $this->belongsToMany('Cars', [
+            'foreignKey' => 'customer_id',
+            'targetForeignKey' => 'car_id',
+            'joinTable' => 'cars_customers'
+        ]);
     }
 
     /**

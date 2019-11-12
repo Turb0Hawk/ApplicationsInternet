@@ -95,26 +95,22 @@
         <?php if (!empty($customer->cars)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('Make') ?></th>
                 <th scope="col"><?= __('Model') ?></th>
                 <th scope="col"><?= __('Trim') ?></th>
                 <th scope="col"><?= __('Transmission') ?></th>
                 <th scope="col"><?= __('Drivetrain') ?></th>
-                <th scope="col"><?= __('Customer Id') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($customer->cars as $cars): ?>
             <tr>
-                <td><?= h($cars->id) ?></td>
                 <td><?= h($cars->make) ?></td>
                 <td><?= h($cars->model) ?></td>
                 <td><?= h($cars->trim) ?></td>
                 <td><?= h($cars->transmission) ?></td>
                 <td><?= h($cars->drivetrain) ?></td>
-                <td><?= h($cars->customer_id) ?></td>
                 <td><?= h($cars->created) ?></td>
                 <td><?= h($cars->modified) ?></td>
                 <td class="actions">
@@ -132,7 +128,6 @@
         <?php if (!empty($customer->courses)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('Name') ?></th>
                 <th scope="col"><?= __('Length') ?></th>
                 <th scope="col"><?= __('Customer Id') ?></th>
@@ -146,7 +141,6 @@
             </tr>
             <?php foreach ($customer->courses as $courses): ?>
             <tr>
-                <td><?= h($courses->id) ?></td>
                 <td><?= h($courses->name) ?></td>
                 <td><?= h($courses->length) ?></td>
                 <td><?= h($courses->customer_id) ?></td>

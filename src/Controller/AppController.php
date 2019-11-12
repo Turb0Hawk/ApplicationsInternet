@@ -70,7 +70,20 @@ class AppController extends Controller
             'unauthorizedRedirect' => $this->referer()
         ]);
 
-        $this->Auth->allow(['display', 'view', 'index', 'register', 'email', 'confirm', 'upload', 'changeLang']);
+        $this->Auth->allow(
+            [
+                'display',
+                'view',
+                'index',
+                'register',
+                'email',
+                'confirm',
+                'upload',
+                'changeLang',
+                'logout',
+                'findCoursesNames'
+            ]
+        );
 
         I18n::setLocale($this->request->session()->read('Config.language'));
 

@@ -30,7 +30,7 @@
             echo $this->Form->control('trim');
             echo $this->Form->control('transmission');
             echo $this->Form->control('drivetrain');
-            echo $this->Form->control('customer_id', ['options' => $customers]);
+            echo $this->Form->control('customers._ids', ['options' => $customers]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

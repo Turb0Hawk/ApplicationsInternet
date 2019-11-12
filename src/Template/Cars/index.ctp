@@ -19,7 +19,6 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('make') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('model') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('trim') ?></th>
@@ -34,7 +33,6 @@
         <tbody>
             <?php foreach ($cars as $car): ?>
             <tr>
-                <td><?= $this->Number->format($car->id) ?></td>
                 <td><?= h($car->make) ?></td>
                 <td><?= h($car->model) ?></td>
                 <td><?= h($car->trim) ?></td>

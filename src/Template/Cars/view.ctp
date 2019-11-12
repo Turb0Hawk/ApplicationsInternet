@@ -57,19 +57,15 @@
             <td><?= h($car->modified) ?></td>
         </tr>
     </table>
-    <div class="related"><h1>Uploaded Files</h1>
-        <div class="content">
+    <div class="related"><h1><?= __('Uploaded Files') ?></h1>
             <!-- Table -->
-            <table class="table">
+            <table cellpadding="0" cellspacing="0">
                 <tr>
-                    <th width="5%">#</th>
-                    <th width="20%">File</th>
-                    <th width="12%">Upload Date</th>
+                    <th >File</th>
                 </tr>
-                <?php if ($filesRowNum > 0):$count = 0;
-                    foreach ($files as $file): $count++; ?>
+                <?php if (!empty($car->files)):
+                    foreach ($car->files as $file): ?>
                         <tr>
-                            <td><?php echo $count; ?></td>
                             <td>
                                 <?php echo $this->Html->image($file->path . $file->name, [
                                     "alt" => $file->name,
@@ -79,12 +75,13 @@
                                 ]);
                                 ?>
                             </td>
-                            <td><?php echo $file->created; ?></td>
                         </tr>
-                    <?php endforeach; else: ?>
-                <tr>
-                    <td colspan="3">No file(s) found......</td>
-                    <?php endif; ?>
+                    <?php endforeach;
+                    else: ?>
+                    <tr>
+                        <td><?= __('No file(s) found......')?></td>
+                    </tr>
+                <?php endif; ?>
             </table>
     </div>
     <div class="related">
@@ -105,23 +102,23 @@
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($car->courses as $courses): ?>
-            <tr>
-                <td><?= h($courses->id) ?></td>
-                <td><?= h($courses->name) ?></td>
-                <td><?= h($courses->length) ?></td>
-                <td><?= h($courses->customer_id) ?></td>
-                <td><?= h($courses->lesson_date) ?></td>
-                <td><?= h($courses->instructor_id) ?></td>
-                <td><?= h($courses->car_id) ?></td>
-                <td><?= h($courses->lesson_status_ref_id) ?></td>
-                <td><?= h($courses->created) ?></td>
-                <td><?= h($courses->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Courses', 'action' => 'view', $courses->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Courses', 'action' => 'edit', $courses->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Courses', 'action' => 'delete', $courses->id], ['confirm' => __('Are you sure you want to delete # {0}?', $courses->id)]) ?>
-                </td>
-            </tr>
+                <tr>
+                    <td><?= h($courses->id) ?></td>
+                    <td><?= h($courses->name) ?></td>
+                    <td><?= h($courses->length) ?></td>
+                    <td><?= h($courses->customer_id) ?></td>
+                    <td><?= h($courses->lesson_date) ?></td>
+                    <td><?= h($courses->instructor_id) ?></td>
+                    <td><?= h($courses->car_id) ?></td>
+                    <td><?= h($courses->lesson_status_ref_id) ?></td>
+                    <td><?= h($courses->created) ?></td>
+                    <td><?= h($courses->modified) ?></td>
+                    <td class="actions">
+                        <?= $this->Html->link(__('View'), ['controller' => 'Courses', 'action' => 'view', $courses->id]) ?>
+                        <?= $this->Html->link(__('Edit'), ['controller' => 'Courses', 'action' => 'edit', $courses->id]) ?>
+                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'Courses', 'action' => 'delete', $courses->id], ['confirm' => __('Are you sure you want to delete # {0}?', $courses->id)]) ?>
+                    </td>
+                </tr>
             <?php endforeach; ?>
         </table>
         <?php endif; ?>

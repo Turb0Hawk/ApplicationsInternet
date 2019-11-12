@@ -1,8 +1,13 @@
 <?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Course $course
- */
+    $urlToCoursesNamesAutocompleteJson = $this->Url->build([
+        "controller" => "CoursesNames",
+        "action" => "findCoursesNames",
+        "_ext" => "json"
+    ]);
+    /**
+     * @var \App\View\AppView $this
+     * @var \App\Model\Entity\Course $course
+     */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
@@ -23,7 +28,7 @@
     <fieldset>
         <legend><?= __('Add Course') ?></legend>
         <?php
-            echo $this->Form->control('name');
+            echo $this->Form->control('name', ['id' => 'autocomplete']);
             echo $this->Form->control('length');
             echo $this->Form->control('customer_id', ['options' => $customers]);
             echo $this->Form->control('lesson_date', ['empty' => true]);

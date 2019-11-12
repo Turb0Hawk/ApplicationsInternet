@@ -50,8 +50,8 @@ class FilesController extends AppController
         $file = $this->Files->newEntity();
         if ($this->request->is(['post'])) {
 
-            if (!empty($this->request->data['file']['name'])) {
-                $fileName = $this->request->data['file']['name'];
+            if (!empty($this->request->getData(['file']['name']))) {
+                $fileName = $this->request->getData(['file']['name']);
                 $uploadPath = 'Files/';
                 $uploadFile = $uploadPath . $fileName;
                 if (move_uploaded_file($this->request->data['file']['tmp_name'], 'img/' . $uploadFile)) {

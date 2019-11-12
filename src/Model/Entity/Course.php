@@ -46,6 +46,7 @@ class Course extends Entity
         'customer' => true,
         'instructor' => true,
         'car' => true,
-        'lesson_status_ref' => true
+        'lesson_status_ref' => true,
+        'courses_names' => true
     ];
 }
