@@ -4,6 +4,8 @@
         "action" => "findCoursesNames",
         "_ext" => "json"
     ]);
+    echo $this->Html->scriptBlock('var urlToAutocompleteAction = "' . $urlToCoursesNamesAutocompleteJson . '";', ['block' => true]);
+    echo $this->Html->script('CoursesNames/autocomplete', ['block' => 'scriptBottom']);
     /**
      * @var \App\View\AppView $this
      * @var \App\Model\Entity\Course $course

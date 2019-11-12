@@ -45,6 +45,7 @@ use Cake\Core\Plugin;
  *
  */
 Router::defaultRouteClass(DashedRoute::class);
+Router::extensions(['json', 'xml']);
 
 Router::scope('/', function (RouteBuilder $routes) {
     // Register scoped middleware for in scopes.
