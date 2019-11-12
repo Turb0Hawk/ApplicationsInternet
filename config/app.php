@@ -267,8 +267,8 @@ return [
             'port' => '',
             'login' => '',
             'password' => '',
-            'database' => ROOT . DS . 'Ressources' . DS . 'TurboHawkRacingSchool.sqlite',
-//            'database' => ROOT . DS . 'webroot' . DS . 'TurboHawkRacingSchool.sqlite',
+ //           'database' => ROOT . DS . 'Ressources' . DS . 'TurboHawkRacingSchool.sqlite',
+            'database' => ROOT . DS . 'webroot' . DS . 'TurboHawkRacingSchool.sqlite',
             'schema' => 'main',
             'prefix' => '',
             'encoding' => ''
