@@ -60,6 +60,11 @@ class CarsTable extends Table
             'targetForeignKey' => 'customer_id',
             'joinTable' => 'cars_customers'
         ]);
+
+        $this->belongsTo('Models', [
+            'foreignKey' => 'model_id'
+        ]);
+
     }
 
     /**

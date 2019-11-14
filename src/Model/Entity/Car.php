@@ -31,8 +31,8 @@ class Car extends Entity
      * @var array
      */
     protected $_accessible = [
-        'make' => true,
-        'model' => true,
+        'makes' => true,
+        'models' => true,
         'trim' => true,
         'transmission' => true,
         'drivetrain' => true,

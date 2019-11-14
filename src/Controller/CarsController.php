@@ -78,7 +78,21 @@ class CarsController extends AppController
         }
         /*$uploadData = '';*/
         $customers = $this->Cars->Customers->find('list', ['limit' => 200]);
-        $this->set(compact('car', 'customers'/*, 'uploadData'*/));
+        // Bâtir la liste des catégories
+        $this->loadModel('Makes');
+        $makes = $this->Makes->find('list', ['limit' => 200]);
+
+        // Extraire le id de la première catégorie
+        $makes = $makes->toArray();
+        reset($makes);
+        $make_id = key($makes);
+
+        // Bâtir la liste des sous-catégories reliées à cette catégorie
+        $models = $this->Cars->Models->find('list', [
+            'conditions' => ['Models.make_id' => $make_id],
+        ]);
+
+        $this->set(compact('car', 'customers', 'makes', 'models'));
     }
 
     /**
