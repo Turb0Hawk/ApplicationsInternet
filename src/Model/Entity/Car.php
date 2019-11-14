@@ -13,6 +13,7 @@ use Cake\ORM\Entity;
  * @property string|null $transmission
  * @property string|null $drivetrain
  * @property int $customer_id
+ * @property int $model_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
@@ -33,6 +34,7 @@ class Car extends Entity
     protected $_accessible = [
         'makes' => true,
         'models' => true,
+        'model_id' => true,
         'trim' => true,
         'transmission' => true,
         'drivetrain' => true,

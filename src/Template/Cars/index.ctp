@@ -24,7 +24,6 @@
                 <th scope="col"><?= $this->Paginator->sort('trim') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('transmission') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('drivetrain') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('customer_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -38,7 +37,6 @@
                 <td><?= h($car->trim) ?></td>
                 <td><?= h($car->transmission) ?></td>
                 <td><?= h($car->drivetrain) ?></td>
-                <td><?= $car->has('customer') ? $this->Html->link($car->customer->name, ['controller' => 'Customers', 'action' => 'view', $car->customer->id]) : '' ?></td>
                 <td><?= h($car->created) ?></td>
                 <td><?= h($car->modified) ?></td>
                 <td class="actions">

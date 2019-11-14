@@ -41,10 +41,6 @@
             <td><?= h($car->drivetrain) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Customer') ?></th>
-            <td><?= $car->has('customer') ? $this->Html->link($car->customer->name, ['controller' => 'Customers', 'action' => 'view', $car->customer->id]) : '' ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($car->id) ?></td>
         </tr>

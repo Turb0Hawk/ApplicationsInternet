@@ -40,7 +40,7 @@ class ModelsTable extends Table
         $this->belongsTo('Makes', [
             'foreignKey' => 'make_id'
         ]);
-        $this->hasMany('Cars', [ //???
+        $this->hasMany('Cars', [
             'foreignKey' => 'model_id'
         ]);
     }

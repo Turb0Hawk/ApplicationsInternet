@@ -28,7 +28,7 @@
     <fieldset>
         <legend><?= __('Add Car') ?></legend>
         <?php
-            echo $this->Form->control('Make_id', ['options' => $makes]);
+            echo $this->Form->control('make_id', ['options' => $makes]);
             echo $this->Form->control('model_id', ['options' => $models]);
             echo $this->Form->control('trim');
             echo $this->Form->control('transmission');

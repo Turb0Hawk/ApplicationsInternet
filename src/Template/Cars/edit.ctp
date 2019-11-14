@@ -1,4 +1,13 @@
 <?php
+    $urlToLinkedListFilter = $this->Url->build([
+        "controller" => "Models",
+        "action" => "getByMake",
+        "_ext" => "json"
+    ]);
+    echo $this->Html->scriptBlock('var urlToLinkedListFilter = "' . $urlToLinkedListFilter . '";', ['block' => true]);
+    echo $this->Html->script('Cars/add', ['block' => 'scriptBottom']);
+?>
+<?php
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Car $car
@@ -25,8 +34,8 @@
     <fieldset>
         <legend><?= __('Edit Car') ?></legend>
         <?php
-            echo $this->Form->control('make');
-            echo $this->Form->control('model');
+            echo $this->Form->control('make_id', ['options' => $makes, 'default' => $make_id]);
+            echo $this->Form->control('model_id', ['options' => $models]);
             echo $this->Form->control('trim');
             echo $this->Form->control('transmission');
             echo $this->Form->control('drivetrain');

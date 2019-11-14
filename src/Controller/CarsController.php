@@ -68,7 +68,10 @@ class CarsController extends AppController
         $car = $this->Cars->newEntity();
         if ($this->request->is('post')) {
             $car = $this->Cars->patchEntity($car, $this->request->getData());
-//            $car->customer_id = $this->Auth->user('customer_id');
+            $this->loadModel('Makes');
+            $model = $this->Cars->Models->get($this->request->getData('model_id'));
+            $car->model = $model->name;
+            $car->make = $this->Makes->get($model->make_id)->name;
             if ($this->Cars->save($car)) {
                 $this->Flash->success(__('The car has been saved.'));
 
@@ -111,6 +114,10 @@ class CarsController extends AppController
             $car = $this->Cars->patchEntity($car, $this->request->getData(),[
                 'accessibleFields' => ['user_id' => false]
             ]);
+            $this->loadModel('Makes');
+            $model = $this->Cars->Models->get($this->request->getData('model_id'));
+            $car->model = $model->name;
+            $car->make = $this->Makes->get($model->make_id)->name;
             if ($this->Cars->save($car)) {
                 $this->Flash->success(__('The car has been saved.'));
 
@@ -119,7 +126,23 @@ class CarsController extends AppController
             $this->Flash->error(__('The car could not be saved. Please, try again.'));
         }
         $customers = $this->Cars->Customers->find('list', ['limit' => 200]);
-        $this->set(compact('car', 'customers'));
+        //$model = $this->Cars->Models $car->model_id
+             // Bâtir la liste des catégories
+        $this->loadModel('Makes');
+        $makes = $this->Makes->find('list', ['limit' => 200]);
+
+        // Extraire le id de la première catégorie
+        $makes = $makes->toArray();
+        reset($makes);
+        $model = $this->Cars->Models->get($car->model_id);
+        $make_id = $this->Makes->get($model->make_id)->id;
+
+        // Bâtir la liste des sous-catégories reliées à cette catégorie
+        $models = $this->Cars->Models->find('list', [
+            'conditions' => ['Models.make_id' => $make_id],
+        ]);
+
+        $this->set(compact('car', 'customers', 'makes', 'models', 'make_id'));
     }
 
     /**
