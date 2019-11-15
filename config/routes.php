@@ -44,6 +44,7 @@ use Cake\Core\Plugin;
  * constructor in your `src/Application.php` file to change this behavior.
  *
  */
+Router::prefix('Admin', function ($routes) { $routes->fallbacks('InflectedRoute'); });
 Router::extensions(['pdf']);
 Router::defaultRouteClass(DashedRoute::class);
 Router::extensions(['json', 'xml']);
