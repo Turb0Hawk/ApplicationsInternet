@@ -17,7 +17,6 @@ function getInstructors() {
                         instructorTable.append('<tr><td>' + count + '</td><td>' + value.name + '</td><td>' + value.lastName + '</td><td>' + value.phone + '</td><td>' + value.user_id + editDeleteButtons);
                         count++;
                     });
-
                 }
     });
 }
