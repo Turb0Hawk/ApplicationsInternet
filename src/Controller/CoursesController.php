@@ -54,7 +54,7 @@ class CoursesController extends AppController
         $course = $this->Courses->newEntity();
         if ($this->request->is('post')) {
             $course = $this->Courses->patchEntity($course, $this->request->getData());
-//            $course->customer_id = $this->Auth->user('customer_id');
+            $course->customer_id = $this->Auth->user('customer_id');
             if ($this->Courses->save($course)) {
                 $this->Flash->success(__('The course has been saved.'));
                 return $this->redirect(['action' => 'index']);

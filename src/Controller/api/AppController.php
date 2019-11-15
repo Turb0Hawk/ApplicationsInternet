@@ -12,6 +12,7 @@ class AppController extends Controller {
 
     public function initialize() {
         parent::initialize();
+        $this->loadComponent('Auth');
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Crud.Crud', [
             'actions' => [
