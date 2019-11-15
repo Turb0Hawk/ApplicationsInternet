@@ -87,6 +87,9 @@ try {
  * When debug = true the metadata cache should only last
  * for a short time.
  */
+Plugin::load('CakePdf', ['bootstrap' => true]);
+//Application::addPlugin()('CakePdf', ['bootstrap' => true]);
+
 if (Configure::read('debug')) {
     Configure::write('Cache._cake_model_.duration', '+2 minutes');
     Configure::write('Cache._cake_core_.duration', '+2 minutes');
@@ -94,6 +97,22 @@ if (Configure::read('debug')) {
     Configure::write('Cache._cake_routes_.duration', '+2 seconds');
 }
 
+Configure::write('CakePdf', [
+    'engine' => [
+        'className' => 'CakePdf.WkHtmlToPdf',
+        'binary' => 'C:\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
+    ],
+    'margin' => [
+        'bottom' => 15,
+        'left' => 50,
+        'right' => 30,
+        'top' => 45
+    ],
+    'orientation' => 'landscape',
+    'download' => true
+]);
+
+Plugin::load('CakePdf', ['bootstrap' => true]);
 /*
  * Set the default server timezone. Using UTC makes time calculations / conversions easier.
  * Check http://php.net/manual/en/timezones.php for list of valid timezone strings.

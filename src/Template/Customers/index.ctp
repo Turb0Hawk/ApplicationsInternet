@@ -48,6 +48,7 @@
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $customer->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $customer->id]) ?>
+                    <?= $this->Html->link('(pdf)', ['action' => 'view', $customer->id . '.pdf']) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $customer->id], ['confirm' => __('Are you sure you want to delete # {0}?', $customer->id)]) ?>
                 </td>
             </tr>
