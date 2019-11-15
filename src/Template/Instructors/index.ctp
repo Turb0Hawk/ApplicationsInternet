@@ -1,61 +1,95 @@
 <?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Instructor[]|\Cake\Collection\CollectionInterface $instructors
- */
+$urlToRestApi = $this->Url->build('/api/instructors', true);
+echo $this->Html->scriptBlock('var urlToRestApi = "' . $urlToRestApi . '";', ['block' => true]);
+echo $this->Html->script('Instructors/index', ['block' => 'scriptBottom']);
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Instructor'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Courses'), ['controller' => 'Courses', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Course'), ['controller' => 'Courses', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="instructors index large-9 medium-8 columns content">
-    <h3><?= __('Instructors') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('lastName') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('phone') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($instructors as $instructor): ?>
-            <tr>
-                <td><?= $this->Number->format($instructor->id) ?></td>
-                <td><?= h($instructor->name) ?></td>
-                <td><?= h($instructor->lastName) ?></td>
-                <td><?= h($instructor->phone) ?></td>
-                <td><?= $instructor->has('user') ? $this->Html->link($instructor->user->email, ['controller' => 'Users', 'action' => 'view', $instructor->user->id]) : '' ?></td>
-                <td><?= h($instructor->created) ?></td>
-                <td><?= h($instructor->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $instructor->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $instructor->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $instructor->id], ['confirm' => __('Are you sure you want to delete # {0}?', $instructor->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+
+<div class="container">
+    <div class="row">
+        <div class="panel panel-default instructors-content">
+            <div class="panel-heading">Instructors <a href="javascript:void(0);" class="glyphicon glyphicon-plus" id="addLink" onclick="javascript:$('#addForm').slideToggle();">Add</a></div>
+            <div class="panel-body none formData" id="addForm">
+                <h2 id="actionLabel">Add Instructor</h2>
+                <form class="form" id="instructorAddForm" enctype='application/json'>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="name" id="name"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" name="lastName" id="lastName"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Telephone Number</label>
+                        <input type="text" class="form-control" name="phone" id="phone"/>
+                    </div>
+                    <div class="form-group">
+                        <label>User profile</label>
+                        <input type="text" class="form-control" name="user_id" id="user_id"/>
+                    </div>
+                    <a href="javascript:void(0);" class="btn btn-warning" onclick="$('#addForm').slideUp();">Cancel</a>
+                    <a href="javascript:void(0);" class="btn btn-success" onclick="instructorAction('add')">Add Instructor</a>
+                    <!-- input type="submit" class="btn btn-success" id="addButton" value="Add Instructor" -->
+                </form>
+            </div>
+            <div class="panel-body none formData" id="editForm">
+                <h2 id="actionLabel">Edit Instructor</h2>
+                <form class="form" id="instructorEditForm" enctype='application/json'>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="name" id="nameEdit"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" name="lastName" id="lastNameEdit"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Telephone Number</label>
+                        <input type="text" class="form-control" name="phone" id="phoneEdit"/>
+                    </div>
+                    <div class="form-group">
+                        <label>User profile</label>
+                        <input type="text" class="form-control" name="user_id" id="user_idEdit"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="id" id="idEdit"/>
+                    <a href="javascript:void(0);" class="btn btn-warning" onclick="$('#editForm').slideUp();">Cancel</a>
+                    <a href="javascript:void(0);" class="btn btn-success" onclick="instructorAction('edit')">Update Instructor</a>
+                    <!-- input type="submit" class="btn btn-success" id="editButton" value="Update Instructor" -->
+                </form>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Last Name</th>
+                    <th>Telephone Number</th>
+                    <th>Profile id</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody id="instructorData">
+                <?php
+                $count = 0;
+                foreach ($instructors as $instructor): $count++;
+                    ?>
+                    <tr>
+                        <td><?php echo '#' . $count; ?></td>
+                        <td><?php echo $instructor['name']; ?></td>
+                        <td><?php echo $instructor['lastName']; ?></td>
+                        <td><?php echo $instructor['phone']; ?></td>
+                        <td><?php echo $instructor['user_id']; ?></td>
+                        <td>
+                            <a href="javascript:void(0);" class="glyphicon glyphicon-edit" onclick="editInstructor('<?php echo $instructor['id']; ?>')"></a>
+                            <a href="javascript:void(0);" class="glyphicon glyphicon-trash" onclick="return confirm('Are you sure to delete data?') ? instructorAction('delete', '<?php echo $instructor['id']; ?>') : false;"></a>
+                        </td>
+                    </tr>
+                <?php
+                endforeach;
+                ?>
+                <tr><td colspan="5">No instructor(s) found......</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

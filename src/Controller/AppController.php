@@ -29,76 +29,24 @@ use Cake\I18n\I18n;
 class AppController extends Controller
 {
 
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * e.g. `$this->loadComponent('Security');`
-     *
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
-
-        $this->loadComponent('RequestHandler', [
-            'enableBeforeRedirect' => false,
-        ]);
-        $this->loadComponent('Flash');
-
-        /*
-         * Enable the following component for recommended CakePHP security settings.
-         * see https://book.cakephp.org/3.0/en/controllers/components/security.html
-         */
-        //$this->loadComponent('Security');
-
-        $this->loadComponent('Auth', [
-            'authorize' => 'Controller',
-            'authenticate' => [
-                'Form' => [
-                    'fields' => [
-                        'username' => 'email',
-                        'password' => 'password'
-                    ]
-                ]
+    use \Crud\Controller\ControllerTrait;
+    public $components = [
+        'RequestHandler',
+        'Crud.Crud' => [
+            'actions' => [
+                'Crud.Index',
+                'Crud.View',
+                'Crud.Add',
+                'Crud.Edit',
+                'Crud.Delete'
             ],
-            'loginAction' => [
-                'controller' => 'Users',
-                'action' => 'login'
-            ],
-            'unauthorizedRedirect' => $this->referer()
-        ]);
-
-        $this->Auth->allow(
-            [
-                'display',
-                'view',
-                'index',
-                'register',
-                'email',
-                'confirm',
-                'upload',
-                'changeLang',
-                'logout',
-                'findCoursesNames'
+            'listeners' => [
+                'Crud.Api',
+                'Crud.ApiPagination',
+                'Crud.ApiQueryLog'
             ]
-        );
+        ]
+    ];
 
-        I18n::setLocale($this->request->session()->read('Config.language'));
 
-    }
-
-    public function isAuthorized($user)
-    {
-        // Par défaut, on refuse l'accès.
-        return false;
-    }
-
-    public function changeLang($lang)
-    {
-        I18n::setLocale($lang);
-        $this->request->getSession()->write('Config.language', $lang);
-        return $this->redirect($this->request->referer());
-    }
 }

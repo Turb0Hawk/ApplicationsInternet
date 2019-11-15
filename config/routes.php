@@ -46,6 +46,10 @@ use Cake\Core\Plugin;
  */
 Router::defaultRouteClass(DashedRoute::class);
 Router::extensions(['json', 'xml']);
+Router::prefix('api', function ($routes) {
+    $routes->extensions(['json', 'xml']);
+    $routes->resources('Instructors');
+});
 
 Router::scope('/', function (RouteBuilder $routes) {
     // Register scoped middleware for in scopes.
@@ -53,11 +57,16 @@ Router::scope('/', function (RouteBuilder $routes) {
         'httpOnly' => true
     ]));
 
+    Router::scope('/', function ($routes) {
+        $routes->resources('Courses');
+    });
+
+    Router::extensions(['json', 'xml']);
     /**
      * Apply a middleware to the current route scope.
      * Requires middleware to be registered via `Application::routes()` with `registerMiddleware()`
      */
-    $routes->applyMiddleware('csrf');
+    //$routes->applyMiddleware('csrf');
 
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',

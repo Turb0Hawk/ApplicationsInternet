@@ -155,7 +155,7 @@ class CoursesController extends AppController
     public function initialize()
     {
         parent::initialize();
-        $this->Auth->allow(['logout', 'view']);
+        //$this->Auth->allow(['logout', 'view']);
     }
 
     protected function getCustomerIdByUserId($userId){
