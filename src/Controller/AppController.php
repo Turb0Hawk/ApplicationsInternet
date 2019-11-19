@@ -48,18 +48,82 @@ class AppController extends Controller
         ]
     ];
 
-    public function initialize() {
+//    public function initialize() {
+//        parent::initialize();
+//
+//        $this->loadComponent('RequestHandler');
+//        $this->loadComponent('Flash');
+//        $this->loadComponent('Auth');
+//
+//        /*
+//         * Enable the following components for recommended CakePHP security settings.
+//         * see https://book.cakephp.org/3.0/en/controllers/components/security.html
+//         */
+//        //$this->loadComponent('Security');
+//        //$this->loadComponent('Csrf');
+//    }
+    public function initialize()
+    {
         parent::initialize();
 
-        $this->loadComponent('RequestHandler');
+        $this->loadComponent('RequestHandler', [
+            'enableBeforeRedirect' => false,
+        ]);
         $this->loadComponent('Flash');
-        $this->loadComponent('Auth');
 
         /*
-         * Enable the following components for recommended CakePHP security settings.
+         * Enable the following component for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
          */
         //$this->loadComponent('Security');
-        //$this->loadComponent('Csrf');
+
+        $this->loadComponent('Auth', [
+            'authorize' => 'Controller',
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'email',
+                        'password' => 'password'
+                    ]
+                ]
+            ],
+            'loginAction' => [
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'unauthorizedRedirect' => $this->referer()
+        ]);
+
+        $this->Auth->allow(
+            [
+                'display',
+                'view',
+                'index',
+                'register',
+                'email',
+                'confirm',
+                'upload',
+                'changeLang',
+                'logout',
+                'findCoursesNames'
+            ]
+        );
+
+        I18n::setLocale($this->request->getSession()->read('Config.language'));
+
     }
+
+    public function isAuthorized($user)
+    {
+        // Par défaut, on refuse l'accès.
+        return false;
+    }
+
+    public function changeLang($lang)
+    {
+        I18n::setLocale($lang);
+        $this->request->getSession()->write('Config.language', $lang);
+        return $this->redirect($this->request->referer());
+    }
+
 }
