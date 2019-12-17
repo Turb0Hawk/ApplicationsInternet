@@ -79,7 +79,7 @@ class CarsController extends AppController
             }
             $this->Flash->error(__('The car could not be saved. Please, try again.'));
         }
-        /*$uploadData = '';*/
+
         $customers = $this->Cars->Customers->find('list', ['limit' => 200]);
         // Bâtir la liste des catégories
         $this->loadModel('Makes');

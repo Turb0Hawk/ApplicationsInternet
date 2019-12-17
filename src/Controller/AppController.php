@@ -105,7 +105,8 @@ class AppController extends Controller
                 'upload',
                 'changeLang',
                 'logout',
-                'findCoursesNames'
+                'findCoursesNames',
+                'getMakes'
             ]
         );
 
