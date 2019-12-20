@@ -2,20 +2,35 @@ var app = angular.module('app', []);
 
 app.controller('InstructorCRUDCtrl', ['$scope', 'InstructorCRUDService', function ($scope, InstructorCRUDService) {
 
+    $scope.getAllInstructors = function () {
+        InstructorCRUDService.getAllInstructors()
+            .then(function success(response) {
+                    $scope.instructors = response.data.data;
+                    $scope.message = '';
+                    $scope.errorMessage = '';
+                },
+                function error(response) {
+                    $scope.message = '';
+                    $scope.errorMessage = 'Error getting instructors!';
+                });
+    }
+
     $scope.updateInstructor = function () {
         InstructorCRUDService.updateInstructor($scope.instructor.id, $scope.instructor.name, $scope.instructor.lastName, $scope.instructor.phone, $scope.instructor.user_id)
             .then(function success(response) {
                     $scope.message = 'Instructor data updated!';
                     $scope.errorMessage = '';
+                    $scope.getAllInstructors();
                 },
                 function error(response) {
                     $scope.errorMessage = 'Error updating instructor!';
                     $scope.message = '';
                 });
+
     }
 
-    $scope.getInstructor = function () {
-        var id = $scope.instructor.id;
+    $scope.getInstructor = function (id) {
+        //var id = $scope.instructor.id;
         InstructorCRUDService.getInstructor(id)
             .then(function success(response) {
                     $scope.instructor = response.data.data;
@@ -35,10 +50,11 @@ app.controller('InstructorCRUDCtrl', ['$scope', 'InstructorCRUDService', functio
 
     $scope.addInstructor = function () {
         if ($scope.instructor != null && $scope.instructor.name && $scope.instructor.lastName && $scope.instructor.phone) {
-            InstructorCRUDService.addInstructor($scope.instructor.id, $scope.instructor.name, $scope.instructor.lastName, $scope.instructor.phone, $scope.instructor.user_id)
+            InstructorCRUDService.addInstructor($scope.instructor.name, $scope.instructor.lastName, $scope.instructor.phone, $scope.instructor.user_id)
                 .then(function success(response) {
                         $scope.message = 'Instructor added!';
                         $scope.errorMessage = '';
+                        $scope.getAllInstructors();
                     },
                     function error(response) {
                         $scope.errorMessage = 'Error adding instructor!';
@@ -50,12 +66,13 @@ app.controller('InstructorCRUDCtrl', ['$scope', 'InstructorCRUDService', functio
         }
     }
 
-    $scope.deleteInstructor = function () {
-        InstructorCRUDService.deleteInstructor($scope.instructor.id)
+    $scope.deleteInstructor = function (id) {
+        InstructorCRUDService.deleteInstructor(id)//$scope.instructor.id)
             .then(function success(response) {
                     $scope.message = 'Instructor deleted!';
                     $scope.instructor = null;
                     $scope.errorMessage = '';
+                    $scope.getAllInstructors();
                 },
                 function error(response) {
                     $scope.errorMessage = 'Error deleting instructor!';
@@ -63,19 +80,7 @@ app.controller('InstructorCRUDCtrl', ['$scope', 'InstructorCRUDService', functio
                 })
     }
 
-    $scope.getAllInstructors = function () {
-        InstructorCRUDService.getAllInstructors()
-            .then(function success(response) {
-                    $scope.instructors = response.data.data;
-                    $scope.message = '';
-                    $scope.errorMessage = '';
-                },
-                function error(response) {
-                    $scope.message = '';
-                    $scope.errorMessage = 'Error getting instructors!';
-                });
-    }
-
+    $scope.getAllInstructors();
 }]);
 
 app.service('InstructorCRUDService', ['$http', function ($http) {

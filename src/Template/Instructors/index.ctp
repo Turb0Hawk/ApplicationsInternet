@@ -43,9 +43,31 @@ echo $this->Html->script('Instructors/index', ['block' => 'scriptBottom']);
     <br />
     <a ng-click="getAllInstructors()">Get all Instructors</a><br />
     <br /> <br />
-    <div ng-repeat="instructor in instructors">
-        {{instructor.id}} {{instructor.name}} {{instructor.lastName}} {{instructor.phone}} {{instructor.user_id}}
-    </div>
-    <!-- pre ng-show='instructors'>{{instructors | json }}</pre-->
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Last Name</th>
+            <th>Phone number</th>
+            <th>User id</th>
+            <th>Actions</th>
+        </tr>
+
+        <tbody ng-repeat="instructor in instructors">
+            <tr>
+                <td>{{instructor.id}}</td>
+                <td>{{instructor.name}}</td>
+                <td>{{instructor.lastName}}</td>
+                <td>{{instructor.phone}}</td>
+                <td>{{instructor.user_id}}</td>
+                <td>
+                    <a ng-click="deleteInstructor(instructor.id)">Delete</a>
+                    <a ng-click="getInstructor(instructor.id)">Edit</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+<!--     <pre ng-show='instructors'>{{instructors | json }}</pre>-->
 </div>
 
