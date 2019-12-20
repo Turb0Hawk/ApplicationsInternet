@@ -36,6 +36,8 @@ class Application extends BaseApplication
     {
         $this->addPlugin('Crud');
 
+        $this->addPlugin('Crud');
+
         $this->addPlugin('CakePdf', ['bootstrap' => true]);
 
         $this->addPlugin('Crud');
