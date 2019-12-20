@@ -1,96 +1,132 @@
-function getInstructors() {
-    $.ajax({
-        type: 'GET',
-        url: urlToRestApi,
-        dataType: "json",
-        success:
-                function (instructors) {
-                    var instructorTable = $('#instructorData');
-                    instructorTable.empty();
-                    var count = 1;
-                    $.each(instructors.data, function (key, value)
-                    {
-                        var editDeleteButtons = '</td><td>' +
-                                '<a href="javascript:void(0);" class="glyphicon glyphicon-edit" onclick="editInstructor(' + value.id + ')"></a>' +
-                                '<a href="javascript:void(0);" class="glyphicon glyphicon-trash" onclick="return confirm(\'Are you sure to delete data?\') ? instructorAction(\'delete\', ' + value.id + ') : false;"></a>' +
-                                '</td></tr>';
-                        instructorTable.append('<tr><td>' + count + '</td><td>' + value.name + '</td><td>' + value.lastName + '</td><td>' + value.phone + '</td><td>' + value.user_id + editDeleteButtons);
-                        count++;
-                    });
-                }
-    });
-}
+var app = angular.module('app', []);
 
-/* Function takes a jquery form
- and converts it to a JSON dictionary */
-function convertFormToJSON(form) {
-    var array = $(form).serializeArray();
-    var json = {};
+app.controller('InstructorCRUDCtrl', ['$scope', 'InstructorCRUDService', function ($scope, InstructorCRUDService) {
 
-    $.each(array, function () {
-        json[this.name] = this.value || '';
-    });
-
-    return json;
-}
-
-/*
- $('#instructorAddForm').submit(function (e) {
- e.preventDefault();
- var data = convertFormToJSON($(this));
- alert(data);
- console.log(data);
- });
- */
-
-function instructorAction(type, id) {
-    id = (typeof id == "undefined") ? '' : id;
-    var statusArr = {add: "added", edit: "updated", delete: "deleted"};
-    var requestType = '';
-    var instructorData = '';
-    var ajaxUrl = urlToRestApi;
-    if (type == 'add') {
-        requestType = 'POST';
-        instructorData = convertFormToJSON($("#addForm").find('.form'));
-    } else if (type == 'edit') {
-        requestType = 'PUT';
-        instructorData = convertFormToJSON($("#editForm").find('.form'));
-    } else {
-        requestType = 'DELETE';
-        ajaxUrl = ajaxUrl + "/" + id;
+    $scope.updateInstructor = function () {
+        InstructorCRUDService.updateInstructor($scope.instructor.id, $scope.instructor.name, $scope.instructor.lastName, $scope.instructor.phone, $scope.instructor.user_id)
+            .then(function success(response) {
+                    $scope.message = 'Instructor data updated!';
+                    $scope.errorMessage = '';
+                },
+                function error(response) {
+                    $scope.errorMessage = 'Error updating instructor!';
+                    $scope.message = '';
+                });
     }
-    $.ajax({
-        type: requestType,
-        url: ajaxUrl,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(instructorData),
-        success: function (msg) {
-            if (msg) {
-                alert('Instructor data has been ' + statusArr[type] + ' successfully.');
-                getInstructors();
-                $('.form')[0].reset();
-                $('.formData').slideUp();
-            } else {
-                alert('Some problem occurred, please try again.');
-            }
-        }
-    });
-}
 
-/*** à déboguer ... ***/
-function editInstructor(id) {
-    $.ajax({
-        type: 'GET',
-        dataType: 'JSON',
-        url: urlToRestApi+ "/" + id,
-        success: function (data) {
-            $('#idEdit').val(data.data.id);
-            $('#nameEdit').val(data.data.name);
-            $('#lastNameEdit').val(data.data.lastName);
-            $('#phoneEdit').val(data.data.phone);
-            $('#user_idEdit').val(data.data.user_id);
-            $('#editForm').slideDown();
+    $scope.getInstructor = function () {
+        var id = $scope.instructor.id;
+        InstructorCRUDService.getInstructor(id)
+            .then(function success(response) {
+                    $scope.instructor = response.data.data;
+                    $scope.instructor.id = id;
+                    $scope.message = '';
+                    $scope.errorMessage = '';
+                },
+                function error(response) {
+                    $scope.message = '';
+                    if (response.status === 404) {
+                        $scope.errorMessage = 'Instructor not found!';
+                    } else {
+                        $scope.errorMessage = "Error getting instructor!";
+                    }
+                });
+    }
+
+    $scope.addInstructor = function () {
+        if ($scope.instructor != null && $scope.instructor.name && $scope.instructor.lastName && $scope.instructor.phone) {
+            InstructorCRUDService.addInstructor($scope.instructor.id, $scope.instructor.name, $scope.instructor.lastName, $scope.instructor.phone, $scope.instructor.user_id)
+                .then(function success(response) {
+                        $scope.message = 'Instructor added!';
+                        $scope.errorMessage = '';
+                    },
+                    function error(response) {
+                        $scope.errorMessage = 'Error adding instructor!';
+                        $scope.message = '';
+                    });
+        } else {
+            $scope.errorMessage = 'Please enter a name!';
+            $scope.message = '';
         }
-    });
-}
+    }
+
+    $scope.deleteInstructor = function () {
+        InstructorCRUDService.deleteInstructor($scope.instructor.id)
+            .then(function success(response) {
+                    $scope.message = 'Instructor deleted!';
+                    $scope.instructor = null;
+                    $scope.errorMessage = '';
+                },
+                function error(response) {
+                    $scope.errorMessage = 'Error deleting instructor!';
+                    $scope.message = '';
+                })
+    }
+
+    $scope.getAllInstructors = function () {
+        InstructorCRUDService.getAllInstructors()
+            .then(function success(response) {
+                    $scope.instructors = response.data.data;
+                    $scope.message = '';
+                    $scope.errorMessage = '';
+                },
+                function error(response) {
+                    $scope.message = '';
+                    $scope.errorMessage = 'Error getting instructors!';
+                });
+    }
+
+}]);
+
+app.service('InstructorCRUDService', ['$http', function ($http) {
+
+    this.getInstructor = function getInstructor(instructorId) {
+        return $http({
+            method: 'GET',
+            url: urlToRestApi + '/' + instructorId,
+            headers: { 'X-Requested-With' : 'XMLHttpRequest',
+                'Accept' : 'application/json'}
+        });
+    }
+
+    this.addInstructor = function addInstructor(name, lastName, phone, user_id) {
+        return $http({
+            method: 'POST',
+            url: urlToRestApi,
+            data: {name: name, lastName: lastName, phone: phone, user_id: user_id},
+            headers: { 'X-Requested-With' : 'XMLHttpRequest',
+                'Accept' : 'application/json'}
+        });
+    }
+
+    this.deleteInstructor = function deleteInstructor(id) {
+        return $http({
+            method: 'DELETE',
+            url: urlToRestApi + '/' + id,
+            headers: { 'X-Requested-With' : 'XMLHttpRequest',
+                'Accept' : 'application/json'}
+        })
+    }
+
+    this.updateInstructor = function updateInstructor(id, name, lastName, phone, user_id) {
+        return $http({
+            method: 'PATCH',
+            url: urlToRestApi + '/' + id,
+            data: {name: name, lastName: lastName, phone: phone, user_id: user_id},
+            headers: { 'X-Requested-With' : 'XMLHttpRequest',
+                'Accept' : 'application/json'}
+        })
+    }
+
+    this.getAllInstructors = function getAllInstructors() {
+        return $http({
+            method: 'GET',
+            url: urlToRestApi,
+            headers: { 'X-Requested-With' : 'XMLHttpRequest',
+                'Accept' : 'application/json'}
+        });
+    }
+
+}]);
+
+
