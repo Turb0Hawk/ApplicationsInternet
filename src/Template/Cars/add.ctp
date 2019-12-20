@@ -1,7 +1,7 @@
 <?php
     $urlToLinkedListFilter = $this->Url->build([
-        "controller" => "Models",
-        "action" => "getByMake",
+        "controller" => "Makes",
+        "action" => "getMakes",
         "_ext" => "json"
     ]);
     echo $this->Html->scriptBlock('var urlToLinkedListFilter = "' . $urlToLinkedListFilter . '";', ['block' => true]);
@@ -27,9 +27,28 @@
     <?= $this->Form->create($car) ?>
     <fieldset>
         <legend><?= __('Add Car') ?></legend>
+        <div>
+            Make:
+            <select name="Make_id"
+                    id="make-id"
+                    ng-model="make"
+                    ng-options="make.name for make in makes track by make.id"
+            >
+                <option value=''>Select</option>
+            </select>
+        </div>
+        <div>
+            Model:
+            <select name="model_id"
+                    id="model-id"
+                    ng-disabled="!make"
+                    ng-model="model"
+                    ng-options="model.name for model in make.models track by model.id"
+            >
+                <option value=''>Select</option>
+            </select>
+        </div>
         <?php
-            echo $this->Form->control('make_id', ['options' => $makes]);
-            echo $this->Form->control('model_id', ['options' => $models]);
             echo $this->Form->control('trim');
             echo $this->Form->control('transmission');
             echo $this->Form->control('drivetrain');

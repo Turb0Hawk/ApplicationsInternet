@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 /**
- * Categories Controller
+ * Makes Controller
  *
  * @property \App\Model\Table\MakesTable $Makes
  *
@@ -19,11 +19,25 @@ class MakesController extends AppController
      */
     public function index()
     {
-        $makes = $this->paginate($this->Categories);
+        $makes = $this->paginate($this->Makes);
 
         $this->set(compact('makes'));
     }
 
+    public function getMakes() {
+        $this->autoRender = false; // avoid to render view
+
+        $makes = $this->Makes->find('all', [
+            'contain' => ['Models'],
+        ]);
+
+//        var_dump($makes);
+        $makesJ = json_encode($makes);
+
+//        var_dump($makesJ);
+        $this->response->type('json');
+        $this->response->body($makesJ);
+    }
     /**
      * View method
      *
@@ -33,7 +47,7 @@ class MakesController extends AppController
      */
     public function view($id = null)
     {
-        $make = $this->Categories->get($id, [
+        $make = $this->Makes->get($id, [
             'contain' => ['Models']
         ]);
 
@@ -47,10 +61,10 @@ class MakesController extends AppController
      */
     public function add()
     {
-        $make = $this->Categories->newEntity();
+        $make = $this->Makes->newEntity();
         if ($this->request->is('post')) {
-            $make = $this->Categories->patchEntity($make, $this->request->getData());
-            if ($this->Categories->save($make)) {
+            $make = $this->Makes->patchEntity($make, $this->request->getData());
+            if ($this->Makes->save($make)) {
                 $this->Flash->success(__('The make has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -69,12 +83,12 @@ class MakesController extends AppController
      */
     public function edit($id = null)
     {
-        $make = $this->Categories->get($id, [
+        $make = $this->Makes->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $make = $this->Categories->patchEntity($make, $this->request->getData());
-            if ($this->Categories->save($make)) {
+            $make = $this->Makes->patchEntity($make, $this->request->getData());
+            if ($this->Makes->save($make)) {
                 $this->Flash->success(__('The make has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -94,8 +108,8 @@ class MakesController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $make = $this->Categories->get($id);
-        if ($this->Categories->delete($make)) {
+        $make = $this->Makes->get($id);
+        if ($this->Makes->delete($make)) {
             $this->Flash->success(__('The make has been deleted.'));
         } else {
             $this->Flash->error(__('The make could not be deleted. Please, try again.'));
