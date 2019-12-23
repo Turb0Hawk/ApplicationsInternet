@@ -23,7 +23,7 @@
         <li><?= $this->Html->link(__('New Course'), ['controller' => 'Courses', 'action' => 'add']) ?></li>
     </ul>
 </nav>
-<div class="cars form large-9 medium-8 columns content">
+<div class="cars form large-9 medium-8 columns content" ng-app="linkedlists" ng-controller="makesController">
     <?= $this->Form->create($car) ?>
     <fieldset>
         <legend><?= __('Add Car') ?></legend>
