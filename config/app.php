@@ -178,7 +178,7 @@ return [
      */
     'Error' => [
         'errorLevel' => E_ALL,
-        'exceptionRenderer' => ExceptionRenderer::class,
+        'exceptionRenderer' => 'Crud\Error\ExceptionRenderer',
         'skipLog' => [],
         'log' => true,
         'trace' => true,

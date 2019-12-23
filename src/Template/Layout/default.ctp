@@ -60,6 +60,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             </li>
         </ul>
         <div class="top-bar-section">
+            <ul class="left">
+                <li>
+                    <?= $this->Html->link(__('home'), ['controller' => 'pages', 'action' => 'index']) ?>
+                </li>
+            </ul>
             <ul class="right">
                 <li><?php
                     $loguser = $this->request->getSession()->read('Auth.User');

@@ -49,6 +49,9 @@ Router::extensions(['json', 'xml']);
 Router::prefix('api', function ($routes) {
     $routes->extensions(['json', 'xml']);
     $routes->resources('Instructors');
+    $routes->resources('Users');
+    Router::connect('/api/Users/register', ['controller' => 'Users', 'action' => 'add', 'prefix' => 'api']);
+    $routes->fallbacks('InflectedRoute');
 });
 
 Router::scope('/', function (RouteBuilder $routes) {

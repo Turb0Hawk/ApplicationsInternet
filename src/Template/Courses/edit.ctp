@@ -27,8 +27,6 @@
         <li><?= $this->Html->link(__('New Instructor'), ['controller' => 'Instructors', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Cars'), ['controller' => 'Cars', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Car'), ['controller' => 'Cars', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Lesson Status Refs'), ['controller' => 'LessonStatusRefs', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Lesson Status Ref'), ['controller' => 'LessonStatusRefs', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="courses form large-9 medium-8 columns content">
