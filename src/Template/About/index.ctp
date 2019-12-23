@@ -30,7 +30,7 @@
             '<li>' .
                 "Cars: il est possible de créer et de gérer des voitures au travers des interfaces dédiés à cela. 
                 À partir de la page index on peut visualiser tout les voitures. À partir de la page 'New Car', on peut ajouter de nouveaux véhicules. 
-                La marque et le modèle sont une liste déroulante et donc on peut seulement ajouter des voitures qui sont dans les marques/modèles supportés.
+                La marque et le modèle sont une liste déroulante Angular JS et donc on peut seulement ajouter des voitures qui sont dans les marques/modèles supportés.
                 La garniture de la voiture, transmission et type de motricitée est spécifiable par écrit. Ensuite il faut associer le vehicule à un client.
                 Avec l'action view il est possible de consulter les détails d'une voiture en particulier ainsi que les fichiers et les cours reliés à la voiture" .
             '</li>' .
@@ -57,6 +57,10 @@
                 Sur la page index, on peut visualiser tout les cours de conduites. Pour chaqu'un de ces derniers, il est possible de les voir en plus de détails, les modifier et de les supprimer.
                 Avec la page New Course, il est possible d'ajouter un nouveau cours en remplissant tout les champs requis et en appuyant sur submit.
                 " .
+            '</li>' .
+            '<li>' .
+            "Autres:  L'utilisateur doit maintenant remplit un formulaire de type captcha lors de la connexion. Notez que tout les pages sont accessibles à partir de la page principale (home)
+                    " .
             '</li>' .
         '</ul>'
     ?>

@@ -29,25 +29,25 @@ class AppController extends Controller {
             ]
         ]);
 
-       /* $this->loadComponent('Auth', [
-            'storage' => 'Memory',
-            'authenticate' => [
-                'Form' => [
-                    'scope' => ['Users.active' => 1]
-                ],
-                'ADmad/JwtAuth.Jwt' => [
-                    'parameter' => 'token',
-                    'userModel' => 'Users',
-                    'scope' => ['Users.active' => 1],
-                    'fields' => [
-                        'username' => 'email'
-                    ],
-                    'queryDatasource' => true
-                ]
-            ],
-            'unauthorizedRedirect' => false,
-            'checkAuthIn' => 'Controller.initialize'
-        ]);*/
+//       $this->loadComponent('Auth', [
+//            'storage' => 'Memory',
+//            'authenticate' => [
+//                'Form' => [
+//                    'scope' => ['Users.active' => 1]
+//                ],
+//                'ADmad/JwtAuth.Jwt' => [
+//                    'parameter' => 'token',
+//                    'userModel' => 'Users',
+//                    'scope' => ['Users.active' => 1],
+//                    'fields' => [
+//                        'username' => 'email'
+//                    ],
+//                    'queryDatasource' => true
+//                ]
+//            ],
+//            'unauthorizedRedirect' => false,
+//            'checkAuthIn' => 'Controller.initialize'
+//        ]);
     }
 //TODO: Le auth est en commentaire puisque les tokens ne veulent pas valider correctement même si le email et mot de passe est bon. Au moins comme sa le reste du tp fonctionne
 }
