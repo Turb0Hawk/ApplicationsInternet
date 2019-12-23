@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Configure;
 use Cake\Mailer\Email;
 use Cake\Utility\Text;
 use ReCaptcha;
@@ -125,19 +126,25 @@ class UsersController extends AppController
         $reCaptcha = new ReCaptcha($secret);
 
         if ($this->request->is('post')) {
-            if ($this->getRequest()["g-recaptcha-response"]) {
+            if ($_POST["g-recaptcha-response"]) {
                 $response = $reCaptcha->verifyResponse(
                     $_SERVER["REMOTE_ADDR"],
                     $_POST["g-recaptcha-response"]
                 );
             }
-            $user = $this->Auth->identify();
+            if($response){
+                $user = $this->Auth->identify();
+                if($response->success){
+                    if ($user) {
+                        $this->Auth->setUser($user);
+                        return $this->redirect($this->Auth->redirectUrl());
+                    }
+                    $this->Flash->error(__('Your username or password are incorrect.') );
+                } else{
+                    $this->Flash->error(__('Please answer the captcha.') );
+                }
 
-            if ($user) {
-                $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
             }
-            $this->Flash->error(__('Your username or password are incorrect.') );
         }
     }
 
@@ -219,4 +226,23 @@ class UsersController extends AppController
         }
         $this->set(compact('user'));
     }
+
+    private function __checkRecaptchaResponse($response){
+        // verifying the response is done through a request to this URL
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        // The API request has three parameters (last one is optional)
+        $data = array('secret' => Configure::read('Recaptcha.SecretKey'),
+            'response' => $response,
+            'remoteip' => $_SERVER['REMOTE_ADDR']);
+
+        // use key 'http' even if you send the request to https://...
+        $options = array(
+            'http' => array(
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'  => 'POST',
+                'content' => http_build_query($data),
+            ),
+        );
+    }
+
 }

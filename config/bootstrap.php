@@ -201,3 +201,6 @@ Type::build('timestamp')
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
+
+Configure::write('Recaptcha.SiteKey','6LdiTMkUAAAAAPlZ_TzIkhh2SUAzim4764hBUx-S');
+Configure::write('Recaptcha.SecretKey','6LdiTMkUAAAAANHD4df7RpobqAFRLlZ1e-dFqMKF');
