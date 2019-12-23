@@ -29,7 +29,7 @@ class AppController extends Controller {
             ]
         ]);
 
-        $this->loadComponent('Auth', [
+       /* $this->loadComponent('Auth', [
             'storage' => 'Memory',
             'authenticate' => [
                 'Form' => [
@@ -47,7 +47,7 @@ class AppController extends Controller {
             ],
             'unauthorizedRedirect' => false,
             'checkAuthIn' => 'Controller.initialize'
-        ]);
+        ]);*/
     }
-//TODO: comment out if cant get token working
+//TODO: Le auth est en commentaire puisque les tokens ne veulent pas valider correctement même si le email et mot de passe est bon. Au moins comme sa le reste du tp fonctionne
 }

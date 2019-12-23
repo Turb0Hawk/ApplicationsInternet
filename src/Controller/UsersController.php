@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Mailer\Email;
 use Cake\Utility\Text;
+use ReCaptcha;
 
 /**
  * Users Controller
@@ -14,6 +15,7 @@ use Cake\Utility\Text;
  */
 class UsersController extends AppController
 {
+
     /**
      * Index method
      *
@@ -112,13 +114,30 @@ class UsersController extends AppController
 
     public function login()
     {
+        require_once "recaptchalib.php";
+        // your secret key
+        $secret = "6LdiTMkUAAAAANHD4df7RpobqAFRLlZ1e-dFqMKF";
+
+        // empty response
+        $response = null;
+
+        // check secret key
+        $reCaptcha = new ReCaptcha($secret);
+
         if ($this->request->is('post')) {
+            if ($this->getRequest()["g-recaptcha-response"]) {
+                $response = $reCaptcha->verifyResponse(
+                    $_SERVER["REMOTE_ADDR"],
+                    $_POST["g-recaptcha-response"]
+                );
+            }
             $user = $this->Auth->identify();
+
             if ($user) {
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            $this->Flash->error(__('Your username or password are incorrect.'));
+            $this->Flash->error(__('Your username or password are incorrect.') );
         }
     }
 

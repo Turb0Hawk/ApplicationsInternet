@@ -64,8 +64,5 @@
     <?= $this->Html->image('db_schema.png', ['alt' => 'Schema de la BD']) ?>
     <a href="http://www.databaseanswers.org/data_models/driving_school/index.htm"> Diagrame source de la base de donnée
         en utilisation</a><br/>
-    <?= $this->Html->image('db_schema.png', ['alt' => 'Schema de la BD']) ?>
-    <a href="http://www.databaseanswers.org/data_models/driving_school/index.htm"> Diagrame source de la base de donnée
-        en utilisation</a><br/>
     <img src="http://www.databaseanswers.org/data_models/driving_school/images/driving_school_dezign.gif"><br/>
 </div>
